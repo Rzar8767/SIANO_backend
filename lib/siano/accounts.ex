@@ -1,12 +1,12 @@
-defmodule Siano.Auth do
+defmodule Siano.Accounts do
   @moduledoc """
-  The Auth context.
+  The Accounts context.
   """
 
   import Ecto.Query, warn: false
   alias Siano.Repo
 
-  alias Siano.Auth.User
+  alias Siano.Accounts.User
 
   @doc """
   Returns the list of users.

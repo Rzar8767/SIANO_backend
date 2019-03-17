@@ -8,7 +8,7 @@ defmodule Siano.Repo.Migrations.CreateUsers do
       add :email, :string, null: false
       add :is_active, :boolean, default: false, null: false
 
-      timestamps()
+      timestamps(type: :utc_datetime)
     end
 
     create unique_index(:users, [:username])

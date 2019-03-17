@@ -1,8 +1,8 @@
 defmodule SianoWeb.UserControllerTest do
   use SianoWeb.ConnCase
 
-  alias Siano.Auth
-  alias Siano.Auth.User
+  alias Siano.Accounts
+  alias Siano.Accounts.User
 
   @create_attrs %{
     email: "some email",
@@ -19,7 +19,7 @@ defmodule SianoWeb.UserControllerTest do
   @invalid_attrs %{email: nil, is_active: nil, password: nil, username: nil}
 
   def fixture(:user) do
-    {:ok, user} = Auth.create_user(@create_attrs)
+    {:ok, user} = Accounts.create_user(@create_attrs)
     user
   end
 

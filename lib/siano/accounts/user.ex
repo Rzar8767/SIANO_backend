@@ -1,4 +1,4 @@
-defmodule Siano.Auth.User do
+defmodule Siano.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,7 +9,7 @@ defmodule Siano.Auth.User do
     field :email, :string
     field :is_active, :boolean, default: false
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false
