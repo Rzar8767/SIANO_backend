@@ -101,4 +101,109 @@ defmodule Siano.Transfer do
   def change_budget(%Budget{} = budget) do
     Budget.changeset(budget, %{})
   end
+
+  alias Siano.Transfer.Member
+
+  @doc """
+  Returns the list of budget_members.
+  The parameter is the budget's id.
+
+  ## Examples
+
+      iex> list_budget_members(6)
+      [%Member{}, ...]
+
+  """
+  def list_budget_members(budget_id) do
+    Member
+    |> where([u], u.budget_id == ^budget_id)
+    |> Repo.all()
+  end
+
+  @doc """
+  Gets a single member.
+
+  Raises `Ecto.NoResultsError` if the Member does not exist.
+
+  ## Examples
+
+      iex> get_member!(123)
+      %Member{}
+
+      iex> get_member!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_member!(budget_id, id) do
+  Member
+  |> where([u], u.budget_id == ^budget_id)
+  |> Repo.get!(id)
+  end
+  @doc """
+  Creates a member.
+  The first parameter is the budget Id where he will belong.
+
+  ## Examples
+
+      iex> create_member(8, %{field: value})
+      {:ok, %Member{}}
+
+      iex> create_member(8, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_member(budget_id, attrs \\ %{}) do
+    %Member{}
+    |> Member.changeset(attrs)
+    |> Ecto.Changeset.change(budget_id: budget_id |> Integer.parse() |> elem(0))
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a member.
+
+  ## Examples
+
+      iex> update_member(member, %{field: new_value})
+      {:ok, %Member{}}
+
+      iex> update_member(member, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_member(%Member{} = member, attrs) do
+    member
+    |> Member.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Member.
+
+  ## Examples
+
+      iex> delete_member(member)
+      {:ok, %Member{}}
+
+      iex> delete_member(member)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_member(%Member{} = member) do
+    member
+    |> Repo.delete()
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking member changes.
+
+  ## Examples
+
+      iex> change_member(member)
+      %Ecto.Changeset{source: %Member{}}
+
+  """
+  def change_member(%Member{} = member) do
+    Member.changeset(member, %{})
+  end
 end
