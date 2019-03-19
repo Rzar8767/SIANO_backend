@@ -14,6 +14,6 @@ defmodule Siano.Transfer.Budget do
   def changeset(budget, attrs) do
     budget
     |> cast(attrs, [:name, :color])
-    |> validate_required([:name, :color])
+    |> validate_required([:name, :color, :owner_id])
   end
 end

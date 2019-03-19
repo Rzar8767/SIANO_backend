@@ -3,9 +3,9 @@ defmodule Siano.Repo.Migrations.CreateBudgets do
 
   def change do
     create table(:budgets) do
-      add :name, :string
+      add :name, :string, null: false
       add :color, :string
-      add :owner_id, references(:users, on_delete: :nothing)
+      add :owner_id, references(:users, on_delete: :nothing), null: false
 
       timestamps(type: :utc_datetime)
     end
