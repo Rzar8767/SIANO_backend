@@ -15,6 +15,6 @@ defmodule Siano.Transfer.Budget do
     budget
     |> cast(attrs, [:name, :color, :owner_id])
     |> foreign_key_constraint(:owner_id)
-    |> validate_required([:name, :color, :owner_id])
+    |> validate_required([:name, :owner_id])
   end
 end

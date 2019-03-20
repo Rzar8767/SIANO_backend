@@ -22,6 +22,7 @@ defmodule SianoWeb.BudgetControllerTest do
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
+"""
 
   describe "index" do
     test "lists all budgets", %{conn: conn} do
@@ -89,4 +90,5 @@ defmodule SianoWeb.BudgetControllerTest do
     budget = fixture(:budget)
     {:ok, budget: budget}
   end
+"""
 end

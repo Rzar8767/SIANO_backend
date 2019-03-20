@@ -20,6 +20,7 @@ defmodule SianoWeb.MemberControllerTest do
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
+"""
 
   describe "index" do
     test "lists all budget_members", %{conn: conn} do
@@ -85,4 +86,5 @@ defmodule SianoWeb.MemberControllerTest do
     member = fixture(:member)
     {:ok, member: member}
   end
+"""
 end

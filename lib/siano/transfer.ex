@@ -134,28 +134,35 @@ defmodule Siano.Transfer do
       ** (Ecto.NoResultsError)
 
   """
-  def get_member!(budget_id, id) do
+  def get_member!(id, budget_id) do
   Member
   |> where([u], u.budget_id == ^budget_id)
   |> Repo.get!(id)
   end
   @doc """
   Creates a member.
-  The first parameter is the budget Id where he will belong.
+  The first parameter is the budget_id for his budget.
 
   ## Examples
 
-      iex> create_member(8, %{field: value})
+      iex> create_member(%{field: value}, 8)
       {:ok, %Member{}}
 
-      iex> create_member(8, %{field: bad_value})
+      iex> create_member(%{field: bad_value}, 8)
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_member(budget_id, attrs \\ %{}) do
+  def create_member(attrs \\ %{}, budget_id)
+
+  def create_member(attrs, budget_id) when is_binary(budget_id) do
+    budget_val = budget_id |> Integer.parse(10) |> elem(0)
+    create_member(attrs, budget_val)
+  end
+
+  def create_member(attrs, budget_id) do
     %Member{}
     |> Member.changeset(attrs)
-    |> Ecto.Changeset.change(budget_id: budget_id |> Integer.parse() |> elem(0))
+    |> Ecto.Changeset.change(budget_id: budget_id)
     |> Repo.insert()
   end
 
