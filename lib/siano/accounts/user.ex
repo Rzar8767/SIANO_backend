@@ -9,7 +9,7 @@ defmodule Siano.Accounts.User do
     field :email, :string
     field :is_active, :boolean, default: false
 
-    has_many :budgets, Siano.Transfer.Budget
+    has_many :budgets, Siano.Transfer.Budget, foreign_key: :owner_id
     many_to_many :budget_members, Siano.Transfer.Budget, join_through: "budget_members"
 
     timestamps(type: :utc_datetime)
