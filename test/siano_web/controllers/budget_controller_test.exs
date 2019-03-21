@@ -1,7 +1,8 @@
 defmodule SianoWeb.BudgetControllerTest do
   use SianoWeb.ConnCase
+  import Siano.Factory
 
-  alias Siano.Transfer
+
   alias Siano.Transfer.Budget
 
   @create_attrs %{
@@ -14,15 +15,11 @@ defmodule SianoWeb.BudgetControllerTest do
   }
   @invalid_attrs %{color: nil, name: nil}
 
-  def fixture(:budget) do
-    {:ok, budget} = Transfer.create_budget(@create_attrs)
-    budget
-  end
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
-"""
+
 
   describe "index" do
     test "lists all budgets", %{conn: conn} do
@@ -33,7 +30,8 @@ defmodule SianoWeb.BudgetControllerTest do
 
   describe "create budget" do
     test "renders budget when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.budget_path(conn, :create), budget: @create_attrs)
+      user = insert(:user)
+      conn = post(conn, Routes.budget_path(conn, :create), budget: Map.put(@create_attrs, :owner_id, user.id))
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.budget_path(conn, :show, id))
@@ -76,19 +74,19 @@ defmodule SianoWeb.BudgetControllerTest do
   describe "delete budget" do
     setup [:create_budget]
 
-    test "deletes chosen budget", %{conn: conn, budget: budget} do
-      conn = delete(conn, Routes.budget_path(conn, :delete, budget))
+    test "deletes chosen budget", %{conn: conn} do
+      budget = insert(:budget)
+      conn = delete(conn, Routes.budget_path(conn, :delete, budget.id))
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.budget_path(conn, :show, budget))
+        get(conn, Routes.budget_path(conn, :show, budget.id))
       end
     end
   end
 
   defp create_budget(_) do
-    budget = fixture(:budget)
+    budget = insert(:budget, @create_attrs) |> Unpreloader.forget(:owner)
     {:ok, budget: budget}
   end
-"""
 end

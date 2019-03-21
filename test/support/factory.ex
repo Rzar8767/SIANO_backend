@@ -5,7 +5,6 @@ defmodule Siano.Factory do
     %Siano.Accounts.User{
       username: sequence("Tester"),
       password: "Password",
-      password_hash: "53ta90t30a9t",
       email: sequence(:email, &"test#{&1}@maxtracks.pl"),
       is_active: false,
     }
@@ -15,14 +14,14 @@ defmodule Siano.Factory do
     %Siano.Transfer.Budget{
       name: "Expenses",
       color: "#52AAFF",
-      owner_id: build(:user),
+      owner: build(:user),
     }
   end
 
   def member_factory do
     %Siano.Transfer.Member{
       nickname: "Pajeet",
-      budget_id: build(:budget),
+      budget: build(:budget),
     }
   end
 
