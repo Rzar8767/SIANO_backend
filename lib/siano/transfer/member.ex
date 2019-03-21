@@ -4,8 +4,11 @@ defmodule Siano.Transfer.Member do
 
   schema "budget_members" do
     field :nickname, :string
-    field :user_id, :id
-    field :budget_id, :id
+    # the user that is "attached" to the budget member
+    belongs_to :user, Siano.Accounts.User
+    belongs_to :budget, Siano.Transfer.Budget
+
+    many_to_many :budget_members, Siano.Accounts.User, join_through: "budget_members"
 
     timestamps(type: :utc_datetime)
   end
