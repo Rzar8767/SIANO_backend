@@ -5,7 +5,7 @@ defmodule Siano.Transactions.Category do
   schema "categories" do
     field :name, :string
 
-    #has_one(name, queryable, opts \\ [])
+    has_many :transactions, Siano.Transactions.Transaction
 
     timestamps(type: :utc_datetime)
   end

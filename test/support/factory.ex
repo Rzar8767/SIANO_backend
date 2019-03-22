@@ -25,4 +25,17 @@ defmodule Siano.Factory do
     }
   end
 
+  def category_factory do
+    %Siano.Transactions.Category{
+      name: sequence("Mydło"),
+    }
+  end
+
+  def transaction_factory do
+    %Siano.Transactions.Transaction{
+      amount: 3.5,
+      date:  DateTime.from_naive!(~N[2011-05-18T15:00:01Z], "Etc/UTC"),
+      budget: build(:budget),
+    }
+  end
 end

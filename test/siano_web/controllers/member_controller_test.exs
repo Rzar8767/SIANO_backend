@@ -2,7 +2,6 @@ defmodule SianoWeb.MemberControllerTest do
   use SianoWeb.ConnCase
   import Siano.Factory
 
-  alias Siano.Transfer
   alias Siano.Transfer.Member
 
   @create_attrs %{
