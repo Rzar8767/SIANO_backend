@@ -8,6 +8,7 @@ defmodule Siano.Transactions.Transaction do
 
     belongs_to :budget, Siano.Transfer.Budget
     belongs_to :category, Siano.Transactions.Category
+    has_many :shares, Siano.Transactions.Share
 
     timestamps(type: :utc_datetime)
   end

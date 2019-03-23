@@ -38,4 +38,12 @@ defmodule Siano.Factory do
       budget: build(:budget),
     }
   end
+
+  def share_factory do
+    %Siano.Transactions.Share{
+      amount: 2.5,
+      transaction: build(:transaction),
+      member: build(:member)
+    }
+  end
 end

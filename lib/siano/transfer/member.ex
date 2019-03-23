@@ -8,6 +8,7 @@ defmodule Siano.Transfer.Member do
     belongs_to :user, Siano.Accounts.User
     belongs_to :budget, Siano.Transfer.Budget
 
+    has_many :shares, Siano.Transactions.Share, foreign_key: :member_id
     many_to_many :budget_members, Siano.Accounts.User, join_through: "budget_members"
 
     timestamps(type: :utc_datetime)
