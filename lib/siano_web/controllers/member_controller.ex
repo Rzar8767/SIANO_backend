@@ -12,7 +12,7 @@ defmodule SianoWeb.MemberController do
   end
 
   def create(conn, %{"budget_id" => budget_id, "member" => member_params}) do
-    with {:ok, %Member{} = member} <- Transfer.create_member(budget_id, member_params) do
+    with {:ok, %Member{} = member} <- Transfer.create_member(member_params, budget_id) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.budget_member_path(conn, :show, budget_id, member))
@@ -21,12 +21,12 @@ defmodule SianoWeb.MemberController do
   end
 
   def show(conn, %{"budget_id" => budget_id, "id" => id}) do
-    member = Transfer.get_member!(budget_id, id)
+    member = Transfer.get_member!(id, budget_id)
     render(conn, "show.json", member: member)
   end
 
   def update(conn, %{"budget_id" => budget_id, "id" => id, "member" => member_params}) do
-    member = Transfer.get_member!(budget_id, id)
+    member = Transfer.get_member!(id, budget_id)
 
     with {:ok, %Member{} = member} <- Transfer.update_member(member, member_params) do
       render(conn, "show.json", member: member)
@@ -34,7 +34,7 @@ defmodule SianoWeb.MemberController do
   end
 
   def delete(conn, %{"budget_id" => budget_id, "id" => id}) do
-    member = Transfer.get_member!(budget_id, id)
+    member = Transfer.get_member!(id, budget_id)
 
     with {:ok, %Member{}} <- Transfer.delete_member(member) do
       send_resp(conn, :no_content, "")

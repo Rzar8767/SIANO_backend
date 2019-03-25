@@ -9,3 +9,7 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+Siano.Repo.insert!(%Siano.Transactions.Category{name: "Ciastko"})
+Siano.Repo.insert!(%Siano.Transactions.Category{name: "Cebula"})
+Siano.Repo.insert!(%Siano.Transactions.Category{name: "Masło"})

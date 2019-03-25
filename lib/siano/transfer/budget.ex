@@ -5,7 +5,9 @@ defmodule Siano.Transfer.Budget do
   schema "budgets" do
     field :color, :string
     field :name, :string
-    field :owner_id, :id
+
+    belongs_to :owner, Siano.Accounts.User
+    has_many :members, Siano.Transfer.Budget
 
     timestamps(type: :utc_datetime)
   end
@@ -15,6 +17,6 @@ defmodule Siano.Transfer.Budget do
     budget
     |> cast(attrs, [:name, :color, :owner_id])
     |> foreign_key_constraint(:owner_id)
-    |> validate_required([:name, :color, :owner_id])
+    |> validate_required([:name])
   end
 end
