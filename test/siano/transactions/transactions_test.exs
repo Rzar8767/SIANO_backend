@@ -7,9 +7,9 @@ defmodule Siano.TransactionsTest do
   describe "transactions" do
     alias Siano.Transactions.Transaction
 
-    @valid_attrs %{amount: "120.5", date: "2010-04-17T14:00:00Z"}
-    @update_attrs %{amount: "456.7", date: "2011-05-18T15:01:01Z"}
-    @invalid_attrs %{amount: nil, date: nil}
+    @valid_attrs %{title: "some title", date: "2010-04-17T14:00:00Z"}
+    @update_attrs %{title: "some updated title", date: "2011-05-18T15:01:01Z"}
+    @invalid_attrs %{title: nil, date: nil}
 
     test "list_transactions/0 returns all transactions" do
       transaction = insert(:transaction) |> Unpreloader.forget(:budget)
@@ -24,7 +24,7 @@ defmodule Siano.TransactionsTest do
     test "create_transaction/1 with valid data creates a transaction" do
       budget = insert(:budget)
       assert {:ok, %Transaction{} = transaction} = Transactions.create_transaction(@valid_attrs, budget.id)
-      assert transaction.amount == Decimal.new("120.5")
+      assert transaction.title == "some title"
       assert transaction.date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
     end
 
@@ -35,7 +35,7 @@ defmodule Siano.TransactionsTest do
     test "update_transaction/2 with valid data updates the transaction" do
       transaction = insert(:transaction) |> Unpreloader.forget(:budget)
       assert {:ok, %Transaction{} = transaction} = Transactions.update_transaction(transaction, @update_attrs)
-      assert transaction.amount == Decimal.new("456.7")
+      assert transaction.title == "some updated title"
       assert transaction.date == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
     end
 

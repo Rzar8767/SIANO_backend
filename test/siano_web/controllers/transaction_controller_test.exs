@@ -5,14 +5,14 @@ defmodule SianoWeb.TransactionControllerTest do
   alias Siano.Transactions.Transaction
 
   @create_attrs %{
-    amount: "120.5",
+    title: "some title",
     date: "2010-04-17T14:00:00Z"
   }
   @update_attrs %{
-    amount: "456.7",
+    title: "some updated title",
     date: "2011-05-18T15:01:01Z"
   }
-  @invalid_attrs %{amount: nil, date: nil}
+  @invalid_attrs %{title: nil, date: nil}
 
 
   setup %{conn: conn} do
@@ -37,7 +37,7 @@ defmodule SianoWeb.TransactionControllerTest do
 
       assert %{
                "id" => id,
-               "amount" => "120.5",
+               "title" => "some title",
                "category_id" => nil,
                "date" => "2010-04-17T14:00:00Z"
              } = json_response(conn, 200)["data"]
@@ -61,7 +61,7 @@ defmodule SianoWeb.TransactionControllerTest do
 
       assert %{
                "id" => id,
-               "amount" => "456.7",
+               "title" => "some updated title",
                "date" => "2011-05-18T15:01:01Z"
              } = json_response(conn, 200)["data"]
     end

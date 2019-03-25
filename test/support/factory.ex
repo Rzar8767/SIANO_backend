@@ -33,7 +33,7 @@ defmodule Siano.Factory do
 
   def transaction_factory do
     %Siano.Transactions.Transaction{
-      amount: 3.5,
+      title: "For cookies",
       date:  DateTime.from_naive!(~N[2011-05-18T15:00:01Z], "Etc/UTC"),
       budget: build(:budget),
     }

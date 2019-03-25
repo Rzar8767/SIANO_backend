@@ -12,7 +12,7 @@ defmodule SianoWeb.TransactionView do
 
   def render("transaction.json", %{transaction: transaction}) do
     %{id: transaction.id,
-      amount: transaction.amount,
+      title: transaction.title,
       date: transaction.date,
       category_id: transaction.category_id}
   end

@@ -2,7 +2,6 @@ defmodule SianoWeb.ShareControllerTest do
   use SianoWeb.ConnCase
   import Siano.Factory
 
-  alias Siano.Transactions
   alias Siano.Transactions.Share
 
   @create_attrs %{
