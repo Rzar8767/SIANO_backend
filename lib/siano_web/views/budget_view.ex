@@ -13,6 +13,7 @@ defmodule SianoWeb.BudgetView do
   def render("budget.json", %{budget: budget}) do
     %{id: budget.id,
       name: budget.name,
-      color: budget.color}
+      color: budget.color,
+      owner_id: budget.owner_id}
   end
 end
