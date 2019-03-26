@@ -37,7 +37,7 @@ defmodule SianoWeb.BudgetController do
     budget = Transfer.get_budget!(id)
 
     with {:ok, %Budget{}} <- Transfer.delete_budget(budget) do
-      send_resp(conn, :ok, "")
+      send_resp(conn, :ok, "deleted")
     end
   end
 end
