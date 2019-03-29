@@ -73,7 +73,7 @@ defmodule SianoWeb.ShareControllerTest do
 
     test "deletes chosen share", %{conn: conn, share: share} do
       conn = delete(conn, Routes.budget_transaction_share_path(conn, :delete, share.transaction.budget_id, share.transaction_id, share))
-      assert response(conn, 204)
+      assert response(conn, 200)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.budget_transaction_share_path(conn, :show, share.transaction.budget_id, share.transaction_id, share))

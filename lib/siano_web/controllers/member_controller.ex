@@ -37,7 +37,7 @@ defmodule SianoWeb.MemberController do
     member = Transfer.get_member!(id, budget_id)
 
     with {:ok, %Member{}} <- Transfer.delete_member(member) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, :ok, "{}")
     end
   end
 end
