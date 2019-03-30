@@ -18,7 +18,7 @@ defmodule Siano.Transfer.Member do
   def changeset(member, attrs) do
     member
     |> cast(attrs, [:nickname, :user_id])
-    |> foreign_key_constraint(:budget_id)
     |> validate_required([:nickname])
+    |> foreign_key_constraint(:budget_id)
   end
 end

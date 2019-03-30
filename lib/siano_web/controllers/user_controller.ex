@@ -37,7 +37,7 @@ defmodule SianoWeb.UserController do
     user = Accounts.get_user!(id)
 
     with {:ok, %User{}} <- Accounts.delete_user(user) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, :ok, "{}")
     end
   end
 end

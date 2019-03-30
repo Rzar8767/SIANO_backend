@@ -37,7 +37,7 @@ defmodule SianoWeb.ShareController do
     share = Transactions.get_share!(id, budget_id, transaction_id)
 
     with {:ok, %Share{}} <- Transactions.delete_share(share) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, :ok, "{}")
     end
   end
 end

@@ -77,7 +77,7 @@ defmodule SianoWeb.TransactionControllerTest do
 
     test "deletes chosen transaction", %{conn: conn, transaction: transaction} do
       conn = delete(conn, Routes.budget_transaction_path(conn, :delete, transaction.budget_id, transaction))
-      assert response(conn, 204)
+      assert response(conn, 200)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.budget_transaction_path(conn, :show, transaction.budget_id, transaction))

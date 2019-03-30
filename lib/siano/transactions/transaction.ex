@@ -18,5 +18,6 @@ defmodule Siano.Transactions.Transaction do
     transaction
     |> cast(attrs, [:title, :date, :category_id])
     |> validate_required([:title])
+    |> foreign_key_constraint(:budget_id)
   end
 end
