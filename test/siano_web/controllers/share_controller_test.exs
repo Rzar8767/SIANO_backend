@@ -5,12 +5,12 @@ defmodule SianoWeb.ShareControllerTest do
   alias Siano.Transactions.Share
 
   @create_attrs %{
-    amount: "120.5"
+    amount: 120.5
   }
   @update_attrs %{
-    amount: "456.7"
+    amount: 456.7
   }
-  @invalid_attrs %{amount: nil}
+  @invalid_attrs %{amount: nil, member_id: -1}
 
 
   setup %{conn: conn} do
@@ -73,7 +73,7 @@ defmodule SianoWeb.ShareControllerTest do
 
     test "deletes chosen share", %{conn: conn, share: share} do
       conn = delete(conn, Routes.budget_transaction_share_path(conn, :delete, share.transaction.budget_id, share.transaction_id, share))
-      assert response(conn, 204)
+      assert response(conn, 200)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.budget_transaction_share_path(conn, :show, share.transaction.budget_id, share.transaction_id, share))

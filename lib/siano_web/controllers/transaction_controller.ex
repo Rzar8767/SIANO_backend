@@ -37,7 +37,7 @@ defmodule SianoWeb.TransactionController do
     transaction = Transactions.get_transaction!(id, budget_id)
 
     with {:ok, %Transaction{}} <- Transactions.delete_transaction(transaction) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, :ok, "{}")
     end
   end
 end

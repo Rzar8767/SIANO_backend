@@ -72,7 +72,7 @@ defmodule SianoWeb.MemberControllerTest do
 
     test "deletes chosen member", %{conn: conn, member: member} do
       conn = delete(conn, Routes.budget_member_path(conn, :delete, member.budget_id, member))
-      assert response(conn, 204)
+      assert response(conn, 200)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.budget_member_path(conn, :show, member.budget_id, member))

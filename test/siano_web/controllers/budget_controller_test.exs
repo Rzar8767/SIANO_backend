@@ -77,7 +77,7 @@ defmodule SianoWeb.BudgetControllerTest do
     test "deletes chosen budget", %{conn: conn} do
       budget = insert(:budget)
       conn = delete(conn, Routes.budget_path(conn, :delete, budget.id))
-      assert response(conn, 204)
+      assert response(conn, 200)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.budget_path(conn, :show, budget.id))
