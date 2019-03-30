@@ -174,19 +174,21 @@ defmodule Siano.Transactions do
   def create_share(attrs \\ %{}, budget_id, transaction_id)
 
   def create_share(attrs, budget_id, transaction_id) when is_binary(budget_id) do
+    IO.puts("Function casting budget_id")
     budget_val = budget_id |> Integer.parse(10) |> elem(0)
     create_share(attrs, budget_val, transaction_id)
   end
 
   def create_share(attrs, budget_id, transaction_id) when is_binary(transaction_id) do
+    IO.puts("Function casting transaction_id")
     transaction_val = transaction_id |> Integer.parse(10) |> elem(0)
     create_share(attrs, budget_id, transaction_val)
   end
 
-  def create_share(attrs, _budget_id, transaction_id) do
+  def create_share(attrs, budget_id, transaction_id) do
+    attrs = Map.put(attrs, "transaction_id", transaction_id)
     %Share{}
-    |> Share.changeset(attrs)
-    |> Ecto.Changeset.change(transaction_id: transaction_id)
+    |> Share.changeset(attrs, budget_id)
     |> Repo.insert()
   end
 

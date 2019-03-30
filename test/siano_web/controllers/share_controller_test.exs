@@ -5,12 +5,12 @@ defmodule SianoWeb.ShareControllerTest do
   alias Siano.Transactions.Share
 
   @create_attrs %{
-    amount: "120.5"
+    amount: 120.5
   }
   @update_attrs %{
-    amount: "456.7"
+    amount: 456.7
   }
-  @invalid_attrs %{amount: nil}
+  @invalid_attrs %{amount: nil, member_id: -1}
 
 
   setup %{conn: conn} do
