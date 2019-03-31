@@ -64,6 +64,7 @@ defmodule Siano.Transactions do
   end
 
   def create_transaction(attrs, budget_id) do
+    attrs = Map.put(attrs, "budget_id", budget_id)
     %Transaction{}
     |> Transaction.changeset(attrs)
     |> Ecto.Changeset.change(budget_id: budget_id)

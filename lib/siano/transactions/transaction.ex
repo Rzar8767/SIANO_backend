@@ -14,10 +14,19 @@ defmodule Siano.Transactions.Transaction do
   end
 
   @doc false
+  def changeset(transaction, %{"budget_id" => budget_id} =attrs) do
+    transaction
+    |> cast(attrs, [:title, :date, :category_id])
+    |> cast_assoc(:shares, with: &Siano.Transactions.Share.changeset(&1, &2, budget_id))
+    |> validate_required([:title])
+    |> foreign_key_constraint(:budget_id)
+  end
+
   def changeset(transaction, attrs) do
     transaction
     |> cast(attrs, [:title, :date, :category_id])
     |> validate_required([:title])
     |> foreign_key_constraint(:budget_id)
   end
+
 end

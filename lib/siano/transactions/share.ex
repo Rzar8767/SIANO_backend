@@ -12,6 +12,9 @@ defmodule Siano.Transactions.Share do
     timestamps(type: :utc_datetime)
   end
 
+  def changeset(share, %{"share" => attrs}, budget_id) do
+    changeset(share, attrs, budget_id)
+  end
   def changeset(share, %{"member_id" => member_id} = attrs, budget_id) do
     query = from m in Siano.Transfer.Member,
               where: m.id == ^member_id,
