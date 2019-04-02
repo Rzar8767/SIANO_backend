@@ -7,9 +7,9 @@ defmodule Siano.TransactionsTest do
   describe "transactions" do
     alias Siano.Transactions.Transaction
 
-    @valid_attrs %{title: "some title", date: "2010-04-17T14:00:00Z"}
-    @update_attrs %{title: "some updated title", date: "2011-05-18T15:01:01Z"}
-    @invalid_attrs %{title: nil, date: nil}
+    @valid_attrs %{"title" => "some title", "date" => "2010-04-17T14:00:00Z"}
+    @update_attrs %{"title" => "some updated title", "date" => "2011-05-18T15:01:01Z"}
+    @invalid_attrs %{"title" => nil, "date" => nil}
 
     test "list_transactions/1 returns all transactions" do
       transaction = insert(:transaction) |> Unpreloader.forget(:budget)

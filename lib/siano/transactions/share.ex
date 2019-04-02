@@ -12,6 +12,10 @@ defmodule Siano.Transactions.Share do
     timestamps(type: :utc_datetime)
   end
 
+  #TODO: Make it take into account update, get rid of extra parameter if possible
+  def changeset(share, %{"share" => attrs}, budget_id) do
+    changeset(share, attrs, budget_id)
+  end
   def changeset(share, %{"member_id" => member_id} = attrs, budget_id) do
     query = from m in Siano.Transfer.Member,
               where: m.id == ^member_id,
@@ -30,6 +34,7 @@ defmodule Siano.Transactions.Share do
   @doc false
   def changeset(share, attrs) do
     share
+    #TODO: Disallow change of transaction_id and member_id without validation in update
     |> cast(attrs, [:amount, :transaction_id, :member_id])
     |> validate_required([:amount])
     |> foreign_key_constraint(:transaction_id)
