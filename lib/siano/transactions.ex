@@ -190,6 +190,7 @@ defmodule Siano.Transactions do
     attrs = Map.put(attrs, "transaction_id", transaction_id)
     %Share{}
     |> Share.changeset(attrs, budget_id)
+    |> Ecto.Changeset.change(transaction_id: transaction_id)
     |> Repo.insert()
   end
 
