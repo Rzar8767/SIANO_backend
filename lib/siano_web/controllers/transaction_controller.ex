@@ -6,10 +6,8 @@ defmodule SianoWeb.TransactionController do
 
   action_fallback SianoWeb.FallbackController
 
-  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, %{"budget_id" => budget_id}) do
     transactions = Transactions.list_transactions(budget_id)
-                 #   |> Siano.Repo.preload([:shares])
     render(conn, "index.json", transactions: transactions)
   end
 
@@ -25,14 +23,6 @@ defmodule SianoWeb.TransactionController do
   def show(conn, %{"budget_id" => budget_id, "id" => id}) do
     transaction = Transactions.get_transaction!(id, budget_id)
     render(conn, "show.json", transaction: transaction)
-  end
-
-  def update(conn, %{"budget_id" => budget_id, "id" => id, "transaction" => transaction_params}) do
-    transaction = Transactions.get_transaction!(id, budget_id)
-
-    with {:ok, %Transaction{} = transaction} <- Transactions.update_transaction(transaction, transaction_params) do
-      render(conn, "show.json", transaction: transaction)
-    end
   end
 
   def delete(conn, %{"budget_id" => budget_id, "id" => id}) do

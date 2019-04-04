@@ -72,24 +72,6 @@ defmodule Siano.Transactions do
     |> Ecto.Changeset.change(budget_id: budget_id)
     |> Repo.insert()
   end
-  @doc """
-  Updates a transaction.
-
-
-  ## Examples
-
-      iex> update_transaction(transaction, %{field: new_value})
-      {:ok, %Transaction{}}
-
-      iex> update_transaction(transaction, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_transaction(%Transaction{} = transaction, attrs) do
-    transaction
-    |> Transaction.changeset(attrs)
-    |> Repo.update()
-  end
 
   @doc """
   Deletes a Transaction.
