@@ -20,6 +20,7 @@ defmodule Siano.Transactions do
   def list_transactions(budget_id) do
     Transaction
     |> where([t], t.budget_id == ^budget_id)
+    |> preload(:shares)
     |> Repo.all()
   end
 
@@ -40,6 +41,7 @@ defmodule Siano.Transactions do
   def get_transaction!(id, budget_id) do
     Transaction
     |> where([t], t.budget_id == ^budget_id)
+    |> preload(:shares)
     |> Repo.get!(id)
   end
 
