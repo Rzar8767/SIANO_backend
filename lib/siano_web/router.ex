@@ -10,7 +10,7 @@ defmodule SianoWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     resources "/budgets", BudgetController, except: [:new, :edit] do
       resources "/members", MemberController, except: [:new, :edit]
-      resources "/transactions", TransactionController, except: [:new, :edit] do
+      resources "/transactions", TransactionController, except: [:new, :edit, :update] do
         resources "/shares", ShareController, except: [:new, :edit]
       end
     end
