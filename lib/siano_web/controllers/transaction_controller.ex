@@ -6,8 +6,10 @@ defmodule SianoWeb.TransactionController do
 
   action_fallback SianoWeb.FallbackController
 
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, %{"budget_id" => budget_id}) do
     transactions = Transactions.list_transactions(budget_id)
+                 #   |> Siano.Repo.preload([:shares])
     render(conn, "index.json", transactions: transactions)
   end
 

@@ -31,6 +31,10 @@ defmodule Siano.Transactions.Share do
     end
   end
 
+  def changeset(share, attrs, _budget_id) do
+    changeset(share, attrs)
+  end
+
   @doc false
   def changeset(share, attrs) do
     share
