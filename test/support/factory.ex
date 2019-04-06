@@ -27,23 +27,36 @@ defmodule Siano.Factory do
 
   def category_factory do
     %Siano.Transactions.Category{
-      name: sequence("Mydło"),
+      name: sequence("Soap"),
     }
   end
 
   def transaction_factory do
+    budget = insert(:budget)
+    #attrs = Map.put(%{}, :budget, budget)
+
     %Siano.Transactions.Transaction{
       title: "For cookies",
       date:  DateTime.from_naive!(~N[2011-05-18T15:00:01Z], "Etc/UTC"),
-      budget: build(:budget),
+      budget: budget,
+     # shares: [build(:share_raw, attrs)]
     }
   end
 
-  def share_factory do
-    budget = insert(:budget)
+  def share_raw_factory(attrs) do
+    budget = Map.get(attrs, :budget, insert(:budget))
     %Siano.Transactions.Share{
       amount: 2.5,
-      transaction: build(:transaction, budget: nil, budget_id: budget.id),
+      member: build(:member, budget: nil, budget_id: budget.id),
+    }
+  end
+
+  def share_factory(attrs) do
+    budget = Map.get(attrs, :budget, insert(:budget))
+    transaction = Map.get(attrs, :transaction, build(:transaction, budget: nil, budget_id: budget.id))
+    %Siano.Transactions.Share{
+      amount: 2.5,
+      transaction: transaction,
       member: build(:member, budget: nil, budget_id: budget.id),
     }
   end

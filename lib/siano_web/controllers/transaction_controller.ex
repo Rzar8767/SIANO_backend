@@ -27,14 +27,6 @@ defmodule SianoWeb.TransactionController do
     render(conn, "show.json", transaction: transaction)
   end
 
-  def update(conn, %{"budget_id" => budget_id, "id" => id, "transaction" => transaction_params}) do
-    transaction = Transactions.get_transaction!(id, budget_id)
-
-    with {:ok, %Transaction{} = transaction} <- Transactions.update_transaction(transaction, transaction_params) do
-      render(conn, "show.json", transaction: transaction)
-    end
-  end
-
   def delete(conn, %{"budget_id" => budget_id, "id" => id}) do
     transaction = Transactions.get_transaction!(id, budget_id)
 

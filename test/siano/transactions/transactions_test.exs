@@ -11,14 +11,22 @@ defmodule Siano.TransactionsTest do
     @update_attrs %{"title" => "some updated title", "date" => "2011-05-18T15:01:01Z"}
     @invalid_attrs %{"title" => nil, "date" => nil}
 
+  def assert_transaction(a, b) do
+    assert a.title == b.title
+    assert a.date == b.date
+    assert a.budget_id == b.budget_id
+    assert a.category_id == b.category_id
+  end
+
     test "list_transactions/1 returns all transactions" do
-      transaction = insert(:transaction) |> Unpreloader.forget(:budget)
-      assert Transactions.list_transactions(transaction.budget_id) == [transaction]
+      transaction = insert(:transaction)
+      transactions = Transactions.list_transactions(transaction.budget_id)
+      assert_transaction(transaction, transactions |> List.first )
     end
 
     test "get_transaction!/2 returns the transaction with given id" do
-      transaction = insert(:transaction) |> Unpreloader.forget(:budget)
-      assert Transactions.get_transaction!(transaction.id, transaction.budget_id) == transaction
+      transaction = insert(:transaction)
+      assert_transaction(transaction, Transactions.get_transaction!(transaction.id, transaction.budget_id))
     end
 
     test "create_transaction/2 with valid data creates a transaction" do
@@ -31,20 +39,6 @@ defmodule Siano.TransactionsTest do
     test "create_transaction/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Transactions.create_transaction(@invalid_attrs)
     end
-
-    test "update_transaction/2 with valid data updates the transaction" do
-      transaction = insert(:transaction) |> Unpreloader.forget(:budget)
-      assert {:ok, %Transaction{} = transaction} = Transactions.update_transaction(transaction, @update_attrs)
-      assert transaction.title == "some updated title"
-      assert transaction.date == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
-    end
-
-    test "update_transaction/2 with invalid data returns error changeset" do
-      transaction = insert(:transaction) |> Unpreloader.forget(:budget)
-      assert {:error, %Ecto.Changeset{}} = Transactions.update_transaction(transaction, @invalid_attrs)
-      assert transaction == Transactions.get_transaction!(transaction.id, transaction.budget_id)
-    end
-
     test "delete_transaction/1 deletes the transaction" do
       transaction = insert(:transaction) |> Unpreloader.forget(:budget)
       assert {:ok, %Transaction{}} = Transactions.delete_transaction(transaction)
