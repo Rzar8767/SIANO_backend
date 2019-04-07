@@ -94,7 +94,7 @@ defmodule Siano.Transfer do
   """
   def update_budget(%Budget{} = budget, attrs) do
     budget
-    |> Budget.changeset(attrs)
+    |> Budget.update_changeset(attrs)
     |> Repo.update()
   end
 

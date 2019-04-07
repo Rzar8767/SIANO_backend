@@ -17,7 +17,8 @@ defmodule SianoWeb.BudgetController do
     render(conn, "index.json", budgets: budgets)
   end
 
-  def create(conn, %{"budget" => budget_params}) do
+  def create(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"budget" => budget_params}) do
+    budget_params = Map.put(budget_params, "owner_id", to_string(user.id))
     with {:ok, %Budget{} = budget} <- Transfer.create_budget(budget_params) do
       conn
       |> put_status(:created)
