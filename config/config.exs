@@ -17,6 +17,16 @@ config :siano, SianoWeb.Endpoint,
   render_errors: [view: SianoWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Siano.PubSub, adapter: Phoenix.PubSub.PG2]
 
+# Phauxth authentication configuration
+config :phauxth,
+  user_context: Siano.Accounts,
+  crypto_module: Bcrypt,
+  token_module: SianoWeb.Auth.Token
+
+# Mailer configuration
+config :siano, SianoWeb.Mailer,
+  adapter: Bamboo.LocalAdapter
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

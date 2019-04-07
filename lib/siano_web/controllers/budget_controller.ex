@@ -1,13 +1,19 @@
 defmodule SianoWeb.BudgetController do
   use SianoWeb, :controller
 
+  import SianoWeb.Authorize
+
   alias Siano.Transfer
   alias Siano.Transfer.Budget
 
   action_fallback SianoWeb.FallbackController
 
-  def index(conn, _params) do
-    budgets = Transfer.list_budgets()
+  plug :user_check when action in [:index, :create]
+  plug :budget_member_check when action in [:show]
+  plug :budget_owner_check when action in [:update, :delete]
+
+  def index(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
+    budgets = Transfer.list_all_user_budgets(user.id)
     render(conn, "index.json", budgets: budgets)
   end
 
@@ -19,7 +25,7 @@ defmodule SianoWeb.BudgetController do
       |> render("show.json", budget: budget)
     end
   end
-
+  # budget_member_check
   def show(conn, %{"id" => id}) do
     budget = Transfer.get_budget!(id)
     render(conn, "show.json", budget: budget)

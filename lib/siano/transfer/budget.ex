@@ -7,7 +7,7 @@ defmodule Siano.Transfer.Budget do
     field :name, :string
 
     belongs_to :owner, Siano.Accounts.User
-    has_many :members, Siano.Transfer.Budget
+    has_many :members, Siano.Transfer.Member
 
     timestamps(type: :utc_datetime)
   end

@@ -21,6 +21,21 @@ defmodule Siano.Transfer do
     Repo.all(Budget)
   end
 
+  def list_all_user_budgets(user_id) do
+    member_query =
+      from b in Budget,
+        join: m in assoc(b, :members),
+        where: m.user_id == ^user_id,
+        select: b
+
+    owner_and_member_query =
+      from b in Budget,
+      where: b.owner_id == ^user_id,
+      union: ^member_query
+
+    Repo.all(owner_and_member_query)
+  end
+
   @doc """
   Gets a single budget.
 
@@ -36,6 +51,16 @@ defmodule Siano.Transfer do
 
   """
   def get_budget!(id), do: Repo.get!(Budget, id)
+
+  def get_owned_budgets(user_id) do
+    query = from b in Budget, where: b.owner_id == ^user_id
+    Repo.all(query)
+  end
+
+  def budget_exists?(%{"id" => id, "owner_id" => owner_id}) do
+    query = from b in Budget, where: b.id == ^id and b.owner_id == ^owner_id
+    Repo.exists?(query)
+  end
 
   @doc """
   Creates a budget.
@@ -139,6 +164,12 @@ defmodule Siano.Transfer do
   |> where([u], u.budget_id == ^budget_id)
   |> Repo.get!(id)
   end
+
+  def member_exists?(%{"budget_id" => budget_id, "user_id" => user_id}) do
+    query = from m in Member, where: m.budget_id == ^budget_id and m.user_id == ^user_id
+    Repo.exists?(query)
+  end
+
   @doc """
   Creates a member.
   The first parameter is the budget_id for his budget.

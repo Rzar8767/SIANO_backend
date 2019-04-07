@@ -3,10 +3,16 @@ defmodule SianoWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Phauxth.AuthenticateToken
   end
 
   scope "/api", SianoWeb do
     pipe_through :api
+
+    post "/sessions", SessionController, :create
+    get "/confirm", ConfirmController, :index
+    post "/password_resets", PasswordResetController, :create
+    put "/password_resets/update", PasswordResetController, :update
     resources "/users", UserController, except: [:new, :edit]
     resources "/budgets", BudgetController, except: [:new, :edit] do
       resources "/members", MemberController, except: [:new, :edit]
@@ -15,4 +21,5 @@ defmodule SianoWeb.Router do
       end
     end
   end
+
 end
