@@ -86,6 +86,6 @@ defmodule SianoWeb.Email do
   defp prep_mail(address) do
     new_email()
     |> to(address)
-    |> from("admin@example.com")
+    |> from("MrSiano@sianoapp.gigalixir.com")
   end
 end
