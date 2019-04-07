@@ -13,6 +13,7 @@ defmodule SianoWeb.Router do
     get "/confirm", ConfirmController, :index
     post "/password_resets", PasswordResetController, :create
     put "/password_resets/update", PasswordResetController, :update
+    get "/me", UserController, :current
     resources "/users", UserController, except: [:new, :edit]
     resources "/budgets", BudgetController, except: [:new, :edit] do
       resources "/members", MemberController, except: [:new, :edit]

@@ -10,7 +10,7 @@ defmodule SianoWeb.UserController do
   action_fallback SianoWeb.FallbackController
 
   # the following plugs are defined in the controllers/authorize.ex file
-  plug :user_check when action in [:index]
+  plug :user_check when action in [:index, :current]
   plug :id_check when action in [:update, :show, :delete]
 
   def index(conn, _params) do
@@ -28,6 +28,10 @@ defmodule SianoWeb.UserController do
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
       |> render("show.json", user: user)
     end
+  end
+
+  def current(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
+    render(conn, "show.json", user: user)
   end
 
   def show(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
