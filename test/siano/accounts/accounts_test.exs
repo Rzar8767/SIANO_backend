@@ -34,9 +34,9 @@ defmodule Siano.AccountsTest do
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@create_attrs)
       assert user.username == "fred@example.com"
-      assert user.password == "reallyHard2gue$$
+      assert user.password == "reallyHard2gue$$"
       assert user.email == "Fred"
-      assert Bcrypt.verify_pass("reallyHard2gue$$, user.password_hash)
+      assert Bcrypt.verify_pass("reallyHard2gue$$", user.password_hash)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
