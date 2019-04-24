@@ -58,7 +58,7 @@ defmodule SianoWeb.Email do
     prep_mail(address)
     |> subject("Reset your password")
     |> text_body(
-        "Reset your password at http://sianoapp.gigalixirapp.com/api/password_resets/edit?key=#{key}"
+        "Reset your password at http://sianoapp.gigalixirapp.com/api/password_resets/update?key=#{key}"
       )
     |> Mailer.deliver_now()
   end
