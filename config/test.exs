@@ -16,4 +16,10 @@ config :siano, Siano.Repo,
   database: "siano_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Password hashing test config
 config :bcrypt_elixir, :log_rounds, 4
+
+# Mailer test configuration
+config :siano, SianoWeb.Mailer,
+  adapter: Bamboo.TestAdapter

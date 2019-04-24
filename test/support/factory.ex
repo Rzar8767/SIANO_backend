@@ -6,7 +6,6 @@ defmodule Siano.Factory do
       username: sequence("Tester"),
       password: "Password",
       email: sequence(:email, &"test#{&1}@maxtracks.pl"),
-      is_active: false,
     }
   end
 # make it do <build> and put id from build or set belongs_to in the model

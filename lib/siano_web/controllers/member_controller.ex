@@ -1,10 +1,15 @@
 defmodule SianoWeb.MemberController do
   use SianoWeb, :controller
 
+  import SianoWeb.Authorize
+
   alias Siano.Transfer
   alias Siano.Transfer.Member
 
   action_fallback SianoWeb.FallbackController
+
+  plug :budget_member_check when action in [:index, :show]
+  plug :budget_owner_check when action in [:create, :update, :delete]
 
   def index(conn, %{"budget_id" => budget_id}) do
     budget_members = Transfer.list_budget_members(budget_id)

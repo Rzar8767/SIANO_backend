@@ -1,10 +1,14 @@
 defmodule SianoWeb.TransactionController do
   use SianoWeb, :controller
 
+  import SianoWeb.Authorize
+
   alias Siano.Transactions
   alias Siano.Transactions.Transaction
 
   action_fallback SianoWeb.FallbackController
+
+  plug :budget_member_check when action in [:index, :create, :show, :delete]
 
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, %{"budget_id" => budget_id}) do

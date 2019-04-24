@@ -13,7 +13,6 @@ defmodule SianoWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       username: user.username,
-      email: user.email,
-      is_active: user.is_active}
+      email: user.email}
   end
 end

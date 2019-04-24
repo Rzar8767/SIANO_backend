@@ -3,10 +3,11 @@ defmodule Siano.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
+      add :email, :string, null: false
       add :username, :string, null: false
       add :password_hash, :string
-      add :email, :string, null: false
-      add :is_active, :boolean, default: false, null: false
+      add :confirmed_at, :utc_datetime
+      add :reset_sent_at, :utc_datetime
 
       timestamps(type: :utc_datetime)
     end

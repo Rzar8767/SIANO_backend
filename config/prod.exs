@@ -86,3 +86,7 @@ config :siano, Siano.Repo,
   pool_size: 2 # Free tier db only allows 4 connections. Rolling deploys need pool_size*(n+1) connections.
 
   IO.puts("B")
+
+  config :siano, SianoWeb.Mailer,
+  adapter: Bamboo.SendGridAdapter,
+  api_key: Map.fetch!(System.get_env(), "SENDGRID_API_KEY")
