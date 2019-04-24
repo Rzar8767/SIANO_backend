@@ -104,7 +104,7 @@ defmodule Siano.Accounts do
   @spec update_password(User.t(), map) :: {:ok, User.t()} | changeset_error
   def update_password(%User{} = user, attrs) do
     Sessions.delete_user_sessions(user)
-
+    # TODO: Allow to change only password, custom changeset
     user
     |> User.create_changeset(attrs)
     |> User.password_updated_changeset()

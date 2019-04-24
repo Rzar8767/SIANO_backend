@@ -17,11 +17,11 @@ defmodule SianoWeb.PasswordResetController do
     |> render("info.json", %{info: "Check your inbox for instructions on how to reset your password"})
   end
 
-  def update(conn, %{"password_reset" => params}) do
+  def update(conn, %{"password_reset" => user_params} = params) do
     case PassReset.verify(params, []) do
       {:ok, user} ->
         user
-        |> Accounts.update_password(params)
+        |> Accounts.update_password(user_params)
         |> update_password(conn, params)
 
       {:error, message} ->
