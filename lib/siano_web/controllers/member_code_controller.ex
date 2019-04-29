@@ -26,7 +26,7 @@ defmodule SianoWeb.MemberCodeController do
          {:ok, %Member{} = member} <- Transfer.invitation_create_member(member_params, server_attrs) do
       conn
       |> put_status(:created)
-    #  |> put_resp_header("location", Routes.budget_member_path(conn, :show, budget_id, member))
+      |> put_resp_header("location", Routes.budget_member_path(conn, :show, budget_id, member))
       |> render("show.json", member: member)
     end
   end
