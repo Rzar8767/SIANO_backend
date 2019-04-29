@@ -146,6 +146,17 @@ defmodule Siano.Transfer do
   end
 
   @doc """
+  Return the list of budget_members that have no users attached to them.
+   The parameter is the budget's id.
+  """
+  def list_free_budget_members(budget_id) do
+    Member
+    |> where([u], u.budget_id == ^budget_id)
+    |> where([u], is_nil(u.user_id))
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single member.
 
   Raises `Ecto.NoResultsError` if the Member does not exist.
@@ -165,6 +176,13 @@ defmodule Siano.Transfer do
   |> Repo.get!(id)
   end
 
+  def get_free_member!(id, budget_id) do
+  Member
+  |> where([u], u.budget_id == ^budget_id)
+  |> where([u], is_nil(u.user_id))
+  |> Repo.get!(id)
+  end
+
   def member_exists?(%{"budget_id" => budget_id, "user_id" => user_id}) do
     query = from m in Member, where: m.budget_id == ^budget_id and m.user_id == ^user_id
     Repo.exists?(query)
@@ -172,7 +190,7 @@ defmodule Siano.Transfer do
 
   @doc """
   Creates a member.
-  The first parameter is the budget_id for his budget.
+  The second parameter is the budget_id for his budget.
 
   ## Examples
 
@@ -198,6 +216,25 @@ defmodule Siano.Transfer do
   end
 
   @doc """
+  Creates a member, server sets user_id and budget_id.
+
+  ## Examples
+
+      iex> invitation_create_member(%{field: value}, %{user_id: 2, budget_id: 1})
+      {:ok, %Member{}}
+
+      iex> invitation_create_member(%{field: bad_value}, 8)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def invitation_create_member(attrs \\ %{}, server_attrs \\ %{}) do
+    %Member{}
+    |> Ecto.Changeset.change(server_attrs)
+    |> Member.invitation_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
   Updates a member.
 
   ## Examples
@@ -212,6 +249,25 @@ defmodule Siano.Transfer do
   def update_member(%Member{} = member, attrs) do
     member
     |> Member.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Updates a member, server sets user_id.
+
+  ## Examples
+
+      iex> update_member(member, %{field: new_value})
+      {:ok, %Member{}}
+
+      iex> update_member(member, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def invitation_update_member(%Member{} = member, attrs \\ %{}, server_attrs \\ %{}) do
+    member
+    |> Ecto.Changeset.change(server_attrs)
+    |> Member.invitation_changeset(attrs)
     |> Repo.update()
   end
 
