@@ -13,5 +13,7 @@ defmodule Siano.Repo.Migrations.CreateBudgetMembers do
     create index(:budget_members, [:user_id])
     create index(:budget_members, [:budget_id])
     create unique_index(:budget_members, [:user_id, :budget_id])
+    create unique_index(:budget_members, [:budget_id, :nickname], name: :unique_nickname_in_budget)
+
   end
 end
