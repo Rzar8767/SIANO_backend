@@ -14,6 +14,8 @@ defmodule SianoWeb.BudgetView do
     %{id: budget.id,
       name: budget.name,
       color: budget.color,
-      owner_id: budget.owner_id}
+      owner_id: budget.owner_id,
+      invite_code: Siano.BudgetToken.encode(budget.id, 1)
+    }
   end
 end

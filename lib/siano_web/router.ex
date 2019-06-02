@@ -14,6 +14,11 @@ defmodule SianoWeb.Router do
     post "/password_resets", PasswordResetController, :create
     put "/password_resets/update", PasswordResetController, :update
     get "/me", UserController, :current
+
+    get "/budgets/code/:code/members", MemberCodeController, :index
+    post "/budgets/code/:code/members", MemberCodeController, :create
+    put "/budgets/code/:code/members/:id", MemberCodeController, :update
+
     resources "/users", UserController, except: [:new, :edit]
     resources "/budgets", BudgetController, except: [:new, :edit] do
       resources "/members", MemberController, except: [:new, :edit]
@@ -22,5 +27,4 @@ defmodule SianoWeb.Router do
       end
     end
   end
-
 end
